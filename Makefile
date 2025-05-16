@@ -24,8 +24,11 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 test:
 	./$(NAME) 
 
+# run: 
+# 	./$(NAME) file1 cmd1 cmd2 file2
+
 run: 
-	./$(NAME) file1 cmd1 cmd2 file2
+	./$(NAME) file1 ls cmd2 file2
 
 valquiria:
 	valgrind ./$(NAME)
