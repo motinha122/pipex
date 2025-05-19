@@ -14,6 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <sys/wait.h>
 #include <sys/types.h>
 
 // Error Functions
@@ -25,9 +26,15 @@
 void error_check(int error_code);
 
 /*
- *    @brief Check the number of arguments, if is different than 5 returns an error 1.
+ *    @brief Checks the number of arguments, if is different than 5 returns an error 1.
  *    @param argc The argc of the main program.
  */
 void check_args_count(int argc);
+
+/*
+ *    @brief Checks if the process creation failed.
+ *    @param pid The pid of the process.
+ */
+void check_create_process(pid_t pid);
 
 #endif
