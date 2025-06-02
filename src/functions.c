@@ -13,6 +13,10 @@ void error_check(int error_code)
     fprintf(stderr, "Error: Fork failed.\n");
     break;
 
+  case 3:
+    fprintf(stderr, "Error: Program execution failed.\n");
+    break;
+
   default:
     fprintf(stderr, "Unkown error.\n");
     break;
@@ -22,16 +26,47 @@ void error_check(int error_code)
 
 void check_args_count(int argc)
 {
-  if (argc != 5)
+  if (argc < 5)
   {
     error_check(1);
   }
 }
 
-void check_create_process(pid_t pid)
+void check_process_creation(pid_t pid)
 {
   if (pid < 0)
   {
     error_check(2);
   }
+}
+
+void check_exec(int exec)
+{
+  if (exec == -1)
+  {
+    error_check(3);
+  }
+}
+
+/* === STRING FUNCTIONS ===*/
+
+// char **split_string(char *str, int num_substrings){
+
+//   return;
+// }
+
+int count_substrings(char *str)
+{
+  int str_size = strlen(str);
+  int count = 1;
+  int i = 0;
+  while (i < str_size)
+  {
+    if (str[i] == ' ')
+    {
+      count++;
+    }
+    i++;
+  }
+  return count;
 }

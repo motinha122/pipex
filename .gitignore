@@ -2,3 +2,5 @@
 /build
 *.txt
 *.excalidraw.png
+print*
+*.c

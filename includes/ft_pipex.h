@@ -17,7 +17,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
-// Error Functions
+/* === ERROR FUNCTIONS ===*/
 
 /*
  *    @brief Checks for an error, prints a message and exit if caught an error.
@@ -35,6 +35,29 @@ void check_args_count(int argc);
  *    @brief Checks if the process creation failed.
  *    @param pid The pid of the process.
  */
-void check_create_process(pid_t pid);
+void check_process_creation(pid_t pid);
+
+/*
+ *    @brief Checks if the program executed failed.
+ *    @param exec The exec command.
+ */
+void check_exec(int exec);
+
+/* === STRING FUNCTIONS ===*/
+
+/*
+ *    @brief Splits a given string separating the substrings with space.
+ *    @param *str The string to divide.
+ *    @param num_substrings The number of substrings.
+ *    @return The array that contains all the substrings.
+ */
+char **split_string(char *str, int num_substrings);
+
+/*
+ *    @brief Counts the number of substrings separated by space.
+ *    @param *str The string to count.
+ *    @return The number of substrings.
+ */
+int count_substrings(char *str);
 
 #endif

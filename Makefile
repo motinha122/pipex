@@ -21,14 +21,17 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test:
-	./$(NAME) 
-
-# run: 
-# 	./$(NAME) file1 cmd1 cmd2 file2
-
 run: 
-	./$(NAME) file1 ls cmd2 file2
+	./$(NAME) file1 cmd1 cmd2 file2
+
+runa: 
+	./$(NAME) documento.txt grep Unix cmd2 file2
+
+runb: 
+	./$(NAME) print_argv grep Unix cmd2 file2
+
+runc:
+	./$(NAME) print_strings grep Unix cmd2 file2 file3 file4 file5
 
 valquiria:
 	valgrind ./$(NAME)
@@ -40,5 +43,7 @@ re: clean all
 
 redo: clean all run
 
+test: clean all runc
+
 #commands 
-.PHONY: all clean run valquiria re
+.PHONY: all clean run runa runb runc valquiria re

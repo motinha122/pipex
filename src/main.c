@@ -1,22 +1,10 @@
 #include "../includes/ft_pipex.h"
 
+extern char **environ;
+
 int main(int argc, char *argv[])
 {
   check_args_count(argc);
-
-  char *args[] = {"teste", "batata", "capivara", NULL};
-  pid_t pid = fork();
-  
-  check_create_process(pid);
-  
-  if(pid == 0){
-    printf(RST RED "Child PID: %d\n" RST, getpid());
-    execv("./print_argv", args);
-  } else {
-    wait(NULL);
-    printf(RST BLUE "\nParent PID: %d\n" RST, getpid());
-    printf(RST GREEN "Child process executed \n" RST);
-  }
 
   // int i = 0;
   // while (*argv)
@@ -26,5 +14,28 @@ int main(int argc, char *argv[])
   //   argv++;
   // }
   // printf("argc: %d\n", argc);
+
+  char *str[] = {"teste", "batata", "xampson", "lep", "cenoura", NULL};
+
+  pid_t pid = fork();
+
+  check_process_creation(pid);
+
+  if (pid == 0)
+  {
+    printf(RST RED "Child PID: %d\n" RST, getpid());
+    // printf("argv[1]: %s", argv[1]);
+    // execvp(argv[1], &argv[1]);
+    // int command = execvp("print_strings", &argv[1]);
+    int command = execvp("./print_strings", str);
+    check_exec(command); 
+  }
+  else
+  {
+    wait(NULL);
+    printf(RST BLUE "\nParent PID: %d\n" RST, getpid());
+    printf(RST GREEN "Child process executed \n" RST);
+  }
+
   return 0;
 }
