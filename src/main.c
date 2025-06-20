@@ -6,36 +6,48 @@ int main(int argc, char *argv[])
 {
   check_args_count(argc);
 
-  // int i = 0;
-  // while (*argv)
-  // {
-  //   printf(RST RED "%d - %s\n" RST, i, *argv);
-  //   i++;
-  //   argv++;
-  // }
-  // printf("argc: %d\n", argc);
+  ProcessCounter p_count = {1};
 
-  char *str[] = {"teste", "batata", "xampson", "lep", "cenoura", NULL};
+  int process_count = get_counter(&p_count);
 
-  pid_t pid = fork();
-
-  check_process_creation(pid);
-
-  if (pid == 0)
+  int fd = creat("tempfile", 0600); // 0600 -> owner
+  
+  pid_t process1 = fork();
+  check_process_creation(process1);
+  if (process1 == SUCCESS)
   {
-    printf(RST RED "Child PID: %d\n" RST, getpid());
-    // printf("argv[1]: %s", argv[1]);
-    // execvp(argv[1], &argv[1]);
-    // int command = execvp("print_strings", &argv[1]);
-    int command = execvp("./print_strings", str);
+    printf(RST RED "Process(%d) PID: %d\n" RST, process_count ,getpid());
+    dup2(fd, STDOUT_FILENO);
+    close(fd);
+    int command = execvp("./print_strings", &argv[1]);
     check_exec(command); 
   }
   else
   {
     wait(NULL);
-    printf(RST BLUE "\nParent PID: %d\n" RST, getpid());
     printf(RST GREEN "Child process executed \n" RST);
+    process_count++;
+    // printf(RST GREEN "Process count: %d\n" RST, process_count);
   }
+  
+  pid_t process2 = fork();
+  check_process_creation(process2);
+  if (process2 == SUCCESS)
+  {
+    printf(RST RED "Process(%d) PID: %d\n" RST, process_count ,getpid());
+    dup2(fd, STDOUT_FILENO);
+    close(fd);
+    int command = execvp("./print_strings", &argv[1]);
+    check_exec(command); 
+  }
+  else
+  {
+    wait(NULL);
+    printf(RST GREEN "Child process executed \n" RST);
+    // printf(RST GREEN "Process count: %d\n" RST, process_count);
+  }
+
+
 
   return 0;
 }

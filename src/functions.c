@@ -70,3 +70,13 @@ int count_substrings(char *str)
   }
   return count;
 }
+
+/* === EXECUTE FUNCTIONS ===*/
+
+void increment_counter(ProcessCounter *c){
+  c->count++;
+}
+
+int get_counter(ProcessCounter *c){
+  return c->count;
+}

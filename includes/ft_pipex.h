@@ -8,14 +8,21 @@
 #define MAGENTA "\x1b[35m"
 #define CYAN "\x1b[36m"
 #define RST "\x1b[0m"
+#define SUCCESS 0
 
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <fcntl.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #include <sys/types.h>
+
+typedef struct {
+  int count;
+} ProcessCounter;
 
 /* === ERROR FUNCTIONS ===*/
 
@@ -59,5 +66,20 @@ char **split_string(char *str, int num_substrings);
  *    @return The number of substrings.
  */
 int count_substrings(char *str);
+
+/* === EXECUTE FUNCTIONS === */
+
+/*
+ *    @brief Increments the counter by 1.
+ *    @param c The counter.
+ */
+void increment_counter(ProcessCounter *c);
+
+/*
+ *    @brief Returns the counter value.
+ *    @param c The counter.
+ *    @return the counter.
+ */
+int get_counter(ProcessCounter *c);
 
 #endif
