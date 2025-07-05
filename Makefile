@@ -25,7 +25,7 @@ run:
 	./$(NAME) file1 cmd1 cmd2 file2
 
 runa: 
-	./$(NAME) documento.txt grep Unix cmd2 file2
+	./$(NAME) documento.txt grep 
 
 runb: 
 	./$(NAME) print_argv grep Unix cmd2 file2
@@ -44,6 +44,8 @@ re: clean all
 redo: clean all run
 
 test: clean all runc
+
+testa: clean all runa
 
 #commands 
 .PHONY: all clean run runa runb runc valquiria re

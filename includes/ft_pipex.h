@@ -19,6 +19,7 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <errno.h>
 
 typedef struct {
   int count;
@@ -49,6 +50,12 @@ void check_process_creation(pid_t pid);
  *    @param exec The exec command.
  */
 void check_exec(int exec);
+
+/*
+ *    @brief Checks if the dup2 executed failed.
+ *    @param dup The dup status.
+ */
+void check_dup(int dup);
 
 /* === STRING FUNCTIONS ===*/
 
@@ -81,5 +88,15 @@ void increment_counter(ProcessCounter *c);
  *    @return the counter.
  */
 int get_counter(ProcessCounter *c);
+
+/*
+ *    @brief Creates a fork and execute the program with the argv
+ *    @param fd The file descriptor to send the output.
+ *    @param p_count The process counter.
+ *    @param **argv The arguments of the main program.
+ *    @param *program The name of the program.
+ */
+void fork_and_execute(int fd, ProcessCounter *p_count, char **argv, char *program);
+
 
 #endif
