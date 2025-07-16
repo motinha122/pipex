@@ -8,7 +8,11 @@ int main(int argc, char *argv[])
 
   int fd = creat("tempfile", 0600); // 0600 -> owner
 
-  fork_and_execute(fd, &p_count, argv, "./print_strings");
+  fork_and_execute(fd, &p_count, argv, "./print", OUTPUT);
+  fork_and_execute(fd, &p_count, argv, "./print_and_list", INPUT);
+
+  close(fd);
+  unlink("tempfile");
 
   return 0;
 }

@@ -31,7 +31,7 @@ runb:
 	./$(NAME) print_argv grep Unix cmd2 file2
 
 runc:
-	./$(NAME) print_strings grep Unix cmd2 file2 file3 file4 file5
+	./$(NAME) cat documento.txt | grep main
 
 valquiria:
 	valgrind ./$(NAME)

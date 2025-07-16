@@ -9,6 +9,8 @@
 #define CYAN "\x1b[36m"
 #define RST "\x1b[0m"
 #define SUCCESS 0
+#define INPUT STDIN_FILENO
+#define OUTPUT STDOUT_FILENO
 
 #include <unistd.h>
 #include <stdio.h>
@@ -95,8 +97,8 @@ int get_counter(ProcessCounter *c);
  *    @param p_count The process counter.
  *    @param **argv The arguments of the main program.
  *    @param *program The name of the program.
+ *    @param io The fd will be set to input or output.
  */
-void fork_and_execute(int fd, ProcessCounter *p_count, char **argv, char *program);
-
+void fork_and_execute(int fd, ProcessCounter *p_count, char **argv, char *program, int io);
 
 #endif

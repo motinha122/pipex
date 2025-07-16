@@ -101,14 +101,14 @@ int get_counter(ProcessCounter *c)
   return c->count;
 }
 
-void fork_and_execute(int fd, ProcessCounter *p_count, char** argv, char* program)
+void fork_and_execute(int fd, ProcessCounter *p_count, char** argv, char* program, int io)
 {
   pid_t process1 = fork();
   check_process_creation(process1);
   if (process1 == SUCCESS)
   {
     printf(RST RED "Process(%d) PID: %d\n" RST, get_counter(p_count), getpid());
-    int dup = dup2(fd, STDOUT_FILENO);
+    int dup = dup2(fd, io);
     check_dup(dup);
     close(fd);
     int command = execvp(program, &argv[1]);
