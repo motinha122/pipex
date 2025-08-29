@@ -11,6 +11,7 @@
 #define SUCCESS 0
 #define INPUT STDIN_FILENO
 #define OUTPUT STDOUT_FILENO
+#define PIPE "^"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -70,11 +71,28 @@ void check_dup(int dup);
 char **split_string(char *str, int num_substrings);
 
 /*
- *    @brief Counts the number of substrings separated by space.
- *    @param *str The string to count.
- *    @return The number of substrings.
+ *    @brief Finds the index of the string in the given array.
+ *    @param **arr The array of strings.
+ *    @param arrsize The size of the array.
+ *    @param *str The string to find the index.
+ *    @return The index of the string.
  */
-int count_substrings(char *str);
+int find_string_index(char **arr, int arr_size, char *str);
+
+/*
+ *    @brief Copies and return an array of strings from src with initial and final index.
+ *    @param **src The source array of strings.
+ *    @param int The index of the initial string to copy.
+ *    @param end The index of the final string to copy.
+ *    @return The array with the copied strings.
+ */
+char **copy_strings_src(char **src, int init, int end);
+
+/*
+ *    @brief Copies and return an array of strings from src with initial and final index.
+ *    @param **src The source array of strings.
+ */
+void free_strings(char **arr);
 
 /* === EXECUTE FUNCTIONS === */
 
@@ -95,10 +113,10 @@ int get_counter(ProcessCounter *c);
  *    @brief Creates a fork and execute the program with the argv
  *    @param fd The file descriptor to send the output.
  *    @param p_count The process counter.
- *    @param **argv The arguments of the main program.
+ *    @param **args The arguments of the main program.
  *    @param *program The name of the program.
  *    @param io The fd will be set to input or output.
  */
-void fork_and_execute(int fd, ProcessCounter *p_count, char **argv, char *program, int io);
+void fork_and_execute(int fd, ProcessCounter *p_count, char **args, char *program, int io);
 
 #endif

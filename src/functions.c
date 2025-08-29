@@ -1,6 +1,6 @@
 #include "../includes/ft_pipex.h"
 
-#define MIN_REQUIRED_ARGS 5
+#define MIN_REQUIRED_ARGS 3
 #define INVALID_ARGS 1
 #define FORK_FAILED 2
 #define EXEC_FAILED 3
@@ -73,20 +73,44 @@ void check_dup(int dup)
 //   return;
 // }
 
-int count_substrings(char *str)
+int find_string_index(char **arr, int arr_size, char *str)
 {
-  int str_size = strlen(str);
-  int count = 1;
   int i = 0;
-  while (i < str_size)
+  while (i < arr_size && strcmp(arr[i], str) != 0)
   {
-    if (str[i] == ' ')
-    {
-      count++;
-    }
     i++;
   }
-  return count;
+  return i;
+}
+
+char **copy_strings_src(char **src, int init, int end)
+{
+  size_t src_size = end - init + 1;
+  size_t total_size = src_size + 1; //Strings + NULL
+  char **temp = malloc(total_size * sizeof(char *));
+  if(temp == NULL) return NULL;
+  int i = 0;
+  int src_index = init;
+  while (i < src_size)
+  {
+    int str_size = strlen(src[src_index]);
+    temp[i] = malloc((str_size + 1) * sizeof(char *));
+    if(temp[i] == NULL) return NULL;
+    strcpy(temp[i], src[src_index]);
+    src_index++;
+    i++;
+  }
+  temp[src_size] = NULL;
+
+  return temp;
+}
+
+void free_strings(char **arr){
+  while(*arr != NULL){
+    free(*arr);
+    arr++;
+  }
+  free(arr);
 }
 
 /* === EXECUTE FUNCTIONS ===*/
@@ -101,7 +125,7 @@ int get_counter(ProcessCounter *c)
   return c->count;
 }
 
-void fork_and_execute(int fd, ProcessCounter *p_count, char** argv, char* program, int io)
+void fork_and_execute(int fd, ProcessCounter *p_count, char** args, char* program, int io)
 {
   pid_t process1 = fork();
   check_process_creation(process1);
@@ -111,7 +135,7 @@ void fork_and_execute(int fd, ProcessCounter *p_count, char** argv, char* progra
     int dup = dup2(fd, io);
     check_dup(dup);
     close(fd);
-    int command = execvp(program, &argv[1]);
+    int command = execvp(program, args);
     check_exec(command);
   }
   else

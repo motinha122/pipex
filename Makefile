@@ -31,10 +31,10 @@ runb:
 	./$(NAME) print_argv grep Unix cmd2 file2
 
 runc:
-	./$(NAME) cat documento.txt | grep main
+	./$(NAME) cat documento.txt batata cenoura ^ grep mainha
 
-valquiria:
-	valgrind ./$(NAME)
+valquiria: 
+	valgrind ./$(NAME) cat documento.txt batata cenoura ^ grep mainha
 
 clean:
 	rm -rf $(BUILD_DIR)
